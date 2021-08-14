@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="DEFAULT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <!-- TRACE > DEBUG > INFO > WARN > ERROR -->
+
+    <springProfile name="cbt,prod">
+        <logger name="HTTP_CLIENT_LOGGER" additivity="false" level="INFO">
+            <appender-ref ref="DEFAULT" />
+        </logger>
+        <logger name="ACCESS_LOGGER" additivity="false" level="INFO">
+            <appender-ref ref="DEFAULT" />
+        </logger>
+        <logger name="DEVELOP_LOGGER" additivity="false" level="INFO">
+            <appender-ref ref="DEFAULT" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="local,dev,sandbox">
+        <root level="DEBUG">
+            <appender-ref ref="DEFAULT" />
+        </root>
+    </springProfile>
+
+</configuration>

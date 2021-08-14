@@ -1,0 +1,77 @@
+spring:
+
+  datasource:
+    username: root
+    password: Tjqltm!!23
+    url: jdbc:mysql://localhost:3306/users?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      data-source-properties:
+        useUnicode: true
+        characterEncoding: UTF-8
+    tomcat:
+      time-between-eviction-runs-millis: 60000
+      test-while-idle: true
+      validation-query: SELECT 1
+
+  #jpa
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        id: false
+        format_sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
+    show-sql: true
+
+  #jackson
+  jackson:
+    mapper:
+      default-view-inclusion: true
+    serialization:
+      fail-on-empty-beans: false
+
+  # redis
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+
+  # token
+  token:
+    prefix: Bearer
+    key: practice
+    jwt:
+      expire: 1800000       # 30 분 - 1000 * 60 * 30
+      header: Authorization
+    refresh:
+      expire: 86400000      # 1 일 - 1000 * 60 * 60 * 24
+      header: RefreshToken
+
+  # oauth2
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            authorization-grant-type: authorization_code
+            client-id: 444444444444444479e933556a21e8
+            client-secret: QQQQQQQQQQQQQQQQuOfOLzjZMc5q1U
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - profile
+              - account_email
+            client-authentication-method: POST
+            client-name: Kakao
+
+        provider:
+
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
